@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -10,15 +11,7 @@ public class Main {
 			nums[i] = sc.nextInt();
 		}
 
-		if (cnt == 1) {
-			System.out.println(nums[0] + " " + nums[0]);
-			return;
-		}
-		int min = nums[0], max = nums[0];
-		for (int i = 1; i < cnt; i++) {
-			if (nums[i] < min) min = nums[i];
-			if (nums[i] > max) max = nums[i];
-		}
-		System.out.println(min + " " + max);
+		Arrays.sort(nums);
+		System.out.println(nums[0] + " " + nums[cnt - 1]);
 	}
 }
