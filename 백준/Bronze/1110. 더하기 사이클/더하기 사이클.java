@@ -5,14 +5,13 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 
 		int num = sc.nextInt();
-		int nowNum = num, cnt = 0;
+		int originalNum = num, cnt = 0;
 
 		do {
 			int sumNum = num / 10 + num % 10; // 각 자리수 더한 값
-			String afterNumS = Integer.toString(num % 10) + Integer.toString(sumNum % 10);
-			num = Integer.parseInt(afterNumS);
+			num = num % 10 * 10 + sumNum % 10 ;
 			cnt++;
-		} while(num != nowNum);
+		} while(num != originalNum);
 		
 		System.out.println(cnt);
 
