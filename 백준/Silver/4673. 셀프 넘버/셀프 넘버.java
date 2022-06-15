@@ -17,7 +17,7 @@ public class Main {
 		System.out.println(sb);
 	}
 
-	public static void d(int num) { // 셀프 넘버 구하는 함수
+	public static void d(int num) {
 		String numS = Integer.toString(num);
 		int newNum = num;
 
