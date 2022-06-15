@@ -14,19 +14,10 @@ public class Main {
 		if (N >= 100) {
 			int cnt = 99;
 			for (int j = 100; j <= N; j++) {
-				int result = 0;
-
-				String NS = Integer.toString(j);
-				
-				int sub = NS.charAt(0) - NS.charAt(1);
-				for (int i = 1; i < NS.length() - 1; i++) {
-					if ((NS.charAt(i) - NS.charAt(i + 1)) != sub) {
-						result = 1;
-					} // if
-				} // for
-				if (result == 0) {
-					cnt++;
+				if(j!=1000 && (j/100 - j%100/10) == (j%100/10 - j%10) ) {
+					cnt ++;
 				}
+				
 			} // for
 			bw.write(cnt + "");
 
