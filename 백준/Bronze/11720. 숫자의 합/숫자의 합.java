@@ -16,7 +16,7 @@ public class Main {
 		for (int i = 0; i < nums.length(); i++) {
 			sum += nums.charAt(i) - '0';
 		}
-		bw.write(sum + "");
+		bw.write(String.valueOf(sum));
 
 		bw.flush();
 		bw.close();
