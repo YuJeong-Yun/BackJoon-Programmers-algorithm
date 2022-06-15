@@ -1,9 +1,7 @@
-import java.io.IOException;
-
 public class Main {
 	static int[] nums = new int[10001];
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
 		StringBuffer sb = new StringBuffer();
 
