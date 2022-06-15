@@ -12,26 +12,23 @@ public class Main {
 		int N = Integer.parseInt(br.readLine());
 		int cnt = 0;
 		for (int i = 0; i < N; i++) {
+			int[] alphabets = new int[26];
 			String s = br.readLine();
 
-			int result = 0;
-			for (int j = 0; j < s.length() - 1; j++) {
-				if (s.charAt(j) == s.charAt(j + 1)) {
-					s = s.replaceAll(s.charAt(j) + "" + s.charAt(j), s.charAt(j) + "");
-					j--;
-				}
-			}
-
+			int result = 1;
 			for (int j = 0; j < s.length(); j++) {
-				if (s.indexOf(s.charAt(j)) != s.lastIndexOf(s.charAt(j))) {
-					result = 1;
-					break;
+				if (alphabets[s.charAt(j) - 'a'] == 1) {
+					if (s.charAt(j-1) != s.charAt(j)) {
+						result = 0;
+						break;
+					}
 				}
-			} // for
-			if (result == 0) {
+				alphabets[s.charAt(j) - 'a'] = 1;
+			}
+			if (result == 1) {
 				cnt++;
 			}
-		} // for
+		}
 
 		bw.write(String.valueOf(cnt));
 		bw.flush();
