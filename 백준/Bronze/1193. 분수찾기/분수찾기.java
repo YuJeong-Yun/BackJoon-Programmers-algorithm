@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 public class Main {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int N = Integer.parseInt(br.readLine());
 
@@ -16,10 +17,13 @@ public class Main {
 		}
 
 		if (cnt % 2 == 0) {
-			System.out.println(cnt - (i - N) + "/" + (1 + (i - N)));
+			bw.write(cnt - (i - N) + "/" + (1 + (i - N)));
 		} else {
-			System.out.println(1 + (i - N) + "/" + (cnt - (i - N)));
+			bw.write(1 + (i - N) + "/" + (cnt - (i - N)));
 		}
+
+		bw.flush();
+		bw.close();
 		br.close();
 	}
 }
