@@ -12,12 +12,10 @@ public class Main {
 		int N = Integer.parseInt(br.readLine());
 
 		int num = (N + 4) / 6;
-		int sum = 0;
-		int i = 1, cnt = 1;
+		int sum = 0, cnt = 1;
 
 		while (sum < num) {
-			sum += i++;
-			cnt++;
+			sum += cnt++;
 		}
 
 		bw.write(cnt + "");
