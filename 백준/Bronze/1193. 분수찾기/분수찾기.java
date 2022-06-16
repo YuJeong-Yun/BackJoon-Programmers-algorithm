@@ -11,15 +11,15 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 
-		int i = 1, cnt = 1;
-		while (i < N) {
-			i += ++cnt;
+		int sum = 1, cnt = 1;
+		while (sum < N) {
+			sum = ++cnt * (cnt+1) / 2;
 		}
 
 		if (cnt % 2 == 0) {
-			bw.write(cnt - (i - N) + "/" + (1 + (i - N)));
+			bw.write(cnt - (sum - N) + "/" + (1 + (sum - N)));
 		} else {
-			bw.write(1 + (i - N) + "/" + (cnt - (i - N)));
+			bw.write(1 + (sum - N) + "/" + (cnt - (sum - N)));
 		}
 
 		bw.flush();
