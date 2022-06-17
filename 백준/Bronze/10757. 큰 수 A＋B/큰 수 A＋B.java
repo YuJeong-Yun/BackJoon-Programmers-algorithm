@@ -1,69 +1,46 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
 		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+
 		String A = st.nextToken();
 		String B = st.nextToken();
 
-		String small = "", big = "";
+		int max = (A.length() > B.length()) ? A.length() : B.length();
 
-		if (A.length() > B.length()) {
-			big = A;
-			small = B;
-		} else {
-			big = B;
-			small = A;
+		int[] aArr = new int[max];
+		int[] bArr = new int[max];
+		int[] sumArr = new int[max + 1];
+
+		for (int i = 0; i < A.length(); i++) {
+			aArr[i] = A.charAt(A.length() - i - 1) - '0';
 		}
 
-		int sum = 0;
-		int over = 0;
-		String result = "";
-		for (int i = 1; i <= small.length(); i++) {
-			sum = big.charAt(big.length() - i) + small.charAt(small.length() - i) - '0' * 2;
-			if (over == 1) {
-				sum++;
-				over = 0;
-			}
-			if (sum >= 10) {
-				over = 1;
-			}
-			result = sum % 10 + result;
-
+		for (int i = 0; i < B.length(); i++) {
+			bArr[i] = B.charAt(B.length() - i - 1) - '0';
 		}
 
-		if (A.length() != B.length()) {
-			for (int i = 0; i < big.length() - small.length(); i++) {
-				sum = big.charAt(big.length() - small.length() - 1 - i) - '0';
-				if (over == 1) {
-					sum++;
-					over = 0;
-				}
-				if (sum >= 10) {
-					over = 1;
-				}
-				result = sum % 10 + result;
-			}
-			if (over == 1) {
-				result = 1 + result;
-			}
-		} else {
-			if (over == 1) {
-				result = 1 + result;
-			}
+		for (int i = 0; i < max; i++) {
+			int sum = aArr[i] + bArr[i] + sumArr[i];
+			sumArr[i] = sum % 10;
+			sumArr[i + 1] = sum / 10;
 		}
 
-		bw.write(result);
-		bw.flush();
-		bw.close();
+		if (sumArr[max] == 1) {
+			sb.append(sumArr[max]);
+		}
+		for (int i = max - 1; i >= 0; i--) {
+			sb.append(sumArr[i]);
+		}
+
+		System.out.println(sb);
 		br.close();
 	}
 }
