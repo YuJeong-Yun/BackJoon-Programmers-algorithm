@@ -15,13 +15,15 @@ public class Main {
 		for (int i = 0; i < T; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			int H = Integer.parseInt(st.nextToken());
-			st.nextToken();
+			int W = Integer.parseInt(st.nextToken());
 			int N = Integer.parseInt(st.nextToken());
 
-			String roomNum = (N % H == 0) ? (H) + "" : (N % H) + "";
-			roomNum += String.format("%02d", (N % H == 0) ? (N / H) : (N / H) + 1);
+			if (N % H == 0) {
+				bw.write(H * 100 + N / H + "\n");
+			} else {
+				bw.write(N % H * 100 + (N / H + 1) + "\n");
+			}
 
-			bw.write(roomNum + "\n");
 		}
 		bw.flush();
 		bw.close();
