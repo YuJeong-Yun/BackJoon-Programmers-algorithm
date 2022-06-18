@@ -14,25 +14,26 @@ public class Main {
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int limit = 1000;
-		int[] numArr = new int[limit + 1];
-
+		int cnt = 0;
 		while (st.hasMoreTokens()) {
 			int num = Integer.parseInt(st.nextToken());
-			if (num % 2 != 0 || num == 2) {
-				numArr[num] = 1;
-			}
-		}
+			boolean primeNum = true;
 
-		numArr[1] = 0;
-		for (int i = 3, j = 1; i * ++j <= limit; i += 2) {
-			while (i * ++j <= limit) {
-				numArr[i * j] = 0;
+			if (num == 1) {
+				continue;
 			}
-			j = 1;
-		}
 
-		int cnt = (int) Arrays.stream(numArr).filter(num -> num == 1).count();
+			for (int i = 2; i <= Math.sqrt(num); i++) {
+				if (num % i == 0) {
+					primeNum = false;
+					break;
+				}
+			}
+			if (primeNum == true) {
+				cnt++;
+			}
+
+		}
 
 		bw.write(cnt + "");
 		bw.flush();
