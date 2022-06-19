@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -10,21 +11,26 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 
 		StringBuilder sb = new StringBuilder();
-		
-		if(M==1) M++;
-		for (int i = M; i <= N; i++) {
-			boolean isPrime = true;
-			for (int j = 2; j <= Math.sqrt(i); j++) {
-				if (i % j == 0) {
-					isPrime = false;
-					break;
+
+		boolean[] isPrime = new boolean[N + 1];
+
+		Arrays.fill(isPrime, true);
+		isPrime[1] = false;
+
+		for (int i = 2; i <= Math.sqrt(N); i++) {
+			if (isPrime[i] == true) {
+				for (int j = i * i; j <= N; j += i) {
+					isPrime[j] = false;
 				}
 			}
-			if (isPrime == true) {
+		}
+
+		for (int i = M; i <= N; i++) {
+			if (isPrime[i] == true) {
 				sb.append(i + "\n");
 			}
-
 		}
+
 		System.out.println(sb);
 		br.close();
 	}
