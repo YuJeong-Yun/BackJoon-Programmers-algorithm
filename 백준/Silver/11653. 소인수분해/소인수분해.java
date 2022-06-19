@@ -6,15 +6,16 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 		StringBuilder sb = new StringBuilder();
-		
-		int i = 2;
-		while (true) {
-			if (N % i == 0) {
+
+		for (int i = 2; i <= Math.sqrt(N); i++) {
+			while (N % i == 0) {
 				sb.append(i + "\n");
-				N /= i--;
+				N /= i;
 			}
-			if (N == 1) break;
-			i++;
+		}
+
+		if (N != 1) {
+			sb.append(N);
 		}
 
 		System.out.println(sb);
