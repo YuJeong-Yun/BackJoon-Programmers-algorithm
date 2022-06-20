@@ -1,35 +1,29 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int N = Integer.parseInt(br.readLine());
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int cnt = 0;
-		while (st.hasMoreTokens()) {
-			int num = Integer.parseInt(st.nextToken());
-			boolean primeNum = true;
+		int limit = 1000, cnt = 0;
+		boolean[] isNotPrime = new boolean[limit + 1];
 
-			if (num == 1) {
-				continue;
-			}
-
-			for (int i = 2; i <= Math.sqrt(num); i++) {
-				if (num % i == 0) {
-					primeNum = false;
-					break;
+		for (int i = 2; i <= Math.sqrt(limit); i++) {
+			if (!isNotPrime[i]) {
+				for (int j = i * i; j <= limit; j += i) {
+					isNotPrime[j] = true;
 				}
 			}
-			if (primeNum == true) {
+		}
+
+		isNotPrime[0] = isNotPrime[1] = true;
+		while (st.hasMoreTokens()) {
+			int num = Integer.parseInt(st.nextToken());
+			if (!isNotPrime[num]) {
 				cnt++;
 			}
 
