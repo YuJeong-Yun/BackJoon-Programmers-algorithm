@@ -6,23 +6,23 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
-		int result = 0;
-		int temp = 1;
-		int pre = 0;
 
-		if (n == 1) {
-			result = 1;
-		}
-
-		while (--n > 0) {
-			result = temp + pre;
-			pre = temp;
-			temp = result;
-		}
+		int result = calcFibonacci(n);
 
 		bw.write(result + "");
 		bw.flush();
 		bw.close();
 		br.close();
+	}
+
+	public static int calcFibonacci(int n) {
+
+		if (n == 0) {
+			return 0;
+		} else if (n == 1) {
+			return 1;
+		}
+
+		return calcFibonacci(n - 1) + calcFibonacci(n - 2);
 	}
 }
