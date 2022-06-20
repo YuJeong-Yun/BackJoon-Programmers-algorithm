@@ -6,13 +6,14 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int N = Integer.parseInt(br.readLine());
-		int result = N;
-		while (N != 1) {
-			if (N == 0) {
-				result = 1;
-				break;
-			}
+		int result;
+		if (N == 0 || N == 1) {
+			result = 1;
+		} else {
+			result = N;
+		}
 
+		while (N > 1) {
 			result *= (--N);
 		}
 
