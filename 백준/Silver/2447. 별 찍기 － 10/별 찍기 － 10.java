@@ -9,10 +9,10 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 
 		int n = Integer.parseInt(br.readLine());
-		String[][] stars = new String[n][n];
+		char[][] stars = new char[n][n];
 
 		for (int i = 0; i < n; i++) {
-			Arrays.fill(stars[i], "*");
+			Arrays.fill(stars[i], '*');
 		}
 
 		drawStar(n, stars, n);
@@ -28,10 +28,14 @@ public class Main {
 		br.close();
 	}
 
-	public static void drawStar(int n, String[][] stars, int seq) {
+	public static void drawStar(int n, char[][] stars, int seq) {
 		for (int z = 0; z < n / seq; z++) {
 			for (int k = 0; k < n / seq; k++) {
-				drawStarInner(z, k, stars, seq);
+				for (int j = seq / 3 + z * seq; j < seq / 3 + z * seq + seq / 3; j++) {
+					for (int i = seq / 3 + k * seq; i < seq / 3 + k * seq + seq / 3; i++) {
+						stars[j][i] = ' ';
+					}
+				}
 			}
 		}
 
@@ -40,12 +44,5 @@ public class Main {
 		}
 	}
 
-	public static void drawStarInner(int z, int k, String[][] stars, int seq) {
-		for (int j = seq / 3 + z * seq; j < seq / 3 + z * seq + seq / 3; j++) {
-			for (int i = seq / 3 + k * seq; i < seq / 3 + k * seq + seq / 3; i++) {
-				stars[j][i] = " ";
-			}
-		}
-	}
 
 }
