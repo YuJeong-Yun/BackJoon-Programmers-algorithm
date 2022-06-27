@@ -3,9 +3,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+	public static boolean[][] chess;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,54 +17,20 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 
-		String[][] chess = new String[N][M];
+		chess = new boolean[N][M];
 
 		for (int i = 0; i < N; i++) {
 			String s = br.readLine();
 			for (int j = 0; j < M; j++) {
-				chess[i][j] = "" + s.charAt(j);
+				chess[i][j] = s.charAt(j) == 'B' ? true : false;
 			}
 		}
 
-		String[] ex1 = new String[M], ex2 = new String[M];
-		for (int i = 0; i < M; i += 2) {
-			ex1[i] = "B";
-			ex2[i] = "W";
-		}
-		for (int i = 1; i < M; i += 2) {
-			ex1[i] = "W";
-			ex2[i] = "B";
-		}
-
-		for (int i = 0; i < N; i += 2) {
-			for (int j = 0; j < M; j++) {
-				if (chess[i][j].equals(ex1[j])) {
-					chess[i][j] = "";
-				}
-			}
-		}
-		for (int i = 1; i < N; i += 2) {
-			for (int j = 0; j < M; j++) {
-				if (chess[i][j].equals(ex2[j])) {
-					chess[i][j] = "";
-				}
-			}
-		}
-
-		int result = 64, temp = 0;
-		for (int i = 0; i <= N - 8; i++) {
-			for (int j = 0; j <= M - 8; j++) {
-				temp = 0;
-				for (int k = i; k < i + 8; k++) {
-					for (int z = j; z < j + 8; z++) {
-						if (chess[k][z] == "") {
-							temp++;
-						}
-					}
-				}
-				temp = Math.min(temp, 64 - temp);
+		int result = 64, temp = 0, length = 8;
+		for (int i = 0; i <= N - length; i++) {
+			for (int j = 0; j <= M - length; j++) {
+				temp = chessBoard(i, j, length);
 				result = Math.min(result, temp);
-
 			}
 		}
 
@@ -70,5 +38,22 @@ public class Main {
 		bw.flush();
 		bw.close();
 		br.close();
+	}
+
+	public static int chessBoard(int x, int y, int length) {
+		boolean BW = true;
+
+		int temp = 0;
+		for (int i = x; i < x + length; i++) {
+			for (int j = y; j < y + length; j++) {
+				if (chess[i][j] != BW) {
+					temp++;
+				}
+				BW = !BW;
+			}
+			BW = !BW;
+		}
+		temp = Math.min(temp, 64 - temp);
+		return temp;
 	}
 }
