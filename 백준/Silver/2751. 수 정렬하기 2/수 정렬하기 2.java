@@ -1,29 +1,29 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
+		final int MAX = 1000000;
 		int N = Integer.parseInt(br.readLine());
-		int[] nums = new int[N];
+		boolean[] nums = new boolean[MAX * 2 + 1];
 
 		for (int i = 0; i < N; i++) {
-			nums[i] = Integer.parseInt(br.readLine());
-		}
-		Arrays.sort(nums);
-		for (int i : nums) {
-			bw.write(i + "\n");
+			int num = Integer.parseInt(br.readLine());
+			nums[MAX + num] = true;
 		}
 
-		bw.flush();
-		bw.close();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < MAX * 2 + 1; i++) {
+			if (nums[i]) {
+				sb.append(i - MAX + "\n");
+			}
+		}
+
+		System.out.println(sb);
 		br.close();
 	}
 }
