@@ -4,7 +4,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -14,36 +18,40 @@ public class Main {
 
 		int N = Integer.parseInt(br.readLine());
 
-		List<String> wordList = new ArrayList<>();
+		Map<Integer, ArrayList<String>> wordMap = new HashMap<>();
 
-		String word = br.readLine();
-		wordList.add(word);
-
-		out:for (int i = 0; i < N - 1; i++) {
+		ArrayList<String> wordList;
+		String word;
+		int length;
+		for (int i = 0; i < N; i++) {
 			word = br.readLine();
+			length = word.length();
 
-			int size = wordList.size();
-			for (int j = 0; j < size; j++) {
-				String getWord = wordList.get(j);
-
-				if (word.length() < getWord.length()) {
-					wordList.add(j, word);
-					continue out;
-				}else if(word.length() == getWord.length()) {
-					if(word.compareTo(getWord) < 0) {
-						wordList.add(j, word);
-						continue out;
-					}else if(word.equals(getWord)) {
-						continue out;
-					}
-				}
+			if (wordMap.containsKey(length)) {
+				wordList = wordMap.get(length);
+			} else {
+				wordList = new ArrayList<>();
 			}
 
+			if (wordList.contains(word)) {
+				continue;
+			}
 			wordList.add(word);
+			wordMap.put(length, wordList);
 		}
 
-		for (int i = 0; i < wordList.size(); i++) {
-			bw.write(wordList.get(i) + "\n");
+		Object[] lengths = wordMap.keySet().toArray();
+		Arrays.sort(lengths);
+
+		for (int i = 0; i < lengths.length; i++) {
+			length = (int) lengths[i];
+
+			wordList = wordMap.get(length);
+			Collections.sort(wordList);
+
+			for (int j = 0; j < wordList.size(); j++) {
+				bw.write(wordList.get(j) + "\n");
+			}
 		}
 
 		bw.flush();
