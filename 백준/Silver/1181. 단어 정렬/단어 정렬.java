@@ -1,49 +1,47 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		StringBuilder sb = new StringBuilder();
 
 		int N = Integer.parseInt(br.readLine());
 
-		Set<String> wordSet = new HashSet<>();
+		String[] wordArr = new String[N];
 
 		for (int i = 0; i < N; i++) {
-			wordSet.add(br.readLine());
+			wordArr[i] = br.readLine();
 		}
 
-		ArrayList<String> wordList;
-		for (int i = 1; i <= 50; i++) {
-			Iterator<String> iterator = wordSet.iterator();
-			wordList = new ArrayList<>();
+		Arrays.sort(wordArr, new Comparator<String>() {
 
-			while (iterator.hasNext()) {
-				String word = iterator.next();
-				if (word.length() == i) {
-					wordList.add(word);
+			@Override
+			public int compare(String o1, String o2) {
+				if (o1.length() == o2.length()) {
+					return o1.compareTo(o2);
+				} else if (o1.length() > o2.length()) {
+					return 1;
+				} else {
+					return -1;
 				}
 			}
-			wordSet.removeAll(wordList);
-			
-			Collections.sort(wordList);
-			for (int j = 0; j < wordList.size(); j++) {
-				bw.write(wordList.get(j) + "\n");
+		});
+
+		String word;
+		sb.append(wordArr[0] + "\n");
+		for (int i = 1; i < N; i++) {
+			word = wordArr[i];
+			if (!wordArr[i].equals(wordArr[i - 1])) {
+				sb.append(wordArr[i] + "\n");
 			}
 		}
 
-		bw.flush();
-		bw.close();
+		System.out.println(sb);
 		br.close();
 	}
 }
