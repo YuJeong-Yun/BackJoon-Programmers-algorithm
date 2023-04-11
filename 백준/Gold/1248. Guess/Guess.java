@@ -40,8 +40,6 @@ public class Main {
     public static void DFS(int L) {
         if (flag) {
             return;
-        } else if (L > N) {
-            return;
         } else if (L == N) {
             flag = true;
             answer = Arrays.copyOf(tmp, N);
@@ -52,17 +50,15 @@ public class Main {
             tmp[L] = i;
 
             boolean check = true;
-            for (int k = 0; k <= L; k++) {
-                int sum = 0;
-                for (int j = k; j <= L; j++) {
-                    sum += tmp[j];
-                    if (sum == 0 && sign[k][j] != '0') {
-                        check = false;
-                    } else if (sum > 0 && sign[k][j] != '+') {
-                        check = false;
-                    } else if (sum < 0 && sign[k][j] != '-') {
-                        check = false;
-                    }
+            int sum = 0;
+            for (int j = L; j >= 0; j--) {
+                sum += tmp[j];
+                if (sum == 0 && sign[j][L] != '0') {
+                    check = false;
+                } else if (sum > 0 && sign[j][L] != '+') {
+                    check = false;
+                } else if (sum < 0 && sign[j][L] != '-') {
+                    check = false;
                 }
             }
             if (check) {
