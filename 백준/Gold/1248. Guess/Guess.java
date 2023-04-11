@@ -43,37 +43,32 @@ public class Main {
         } else if (L > N) {
             return;
         } else if (L == N) {
-            if (check(N)) {
-                flag = true;
-                answer = Arrays.copyOf(tmp, N);
-            }
+            flag = true;
+            answer = Arrays.copyOf(tmp, N);
             return;
         }
 
         for (int i = -10; i <= 10; i++) {
             tmp[L] = i;
-            if (!check(L)) {
-                return;
-            }
-            DFS(L + 1);
-        }
-    }
 
-    public static boolean check(int N) {
-        for (int i = 0; i < N; i++) {
-            int sum = 0;
-            for (int j = i; j < N; j++) {
-                sum += tmp[j];
-                if (sum == 0 && sign[i][j] != '0') {
-                    return false;
-                } else if (sum > 0 && sign[i][j] != '+') {
-                    return false;
-                } else if (sum < 0 && sign[i][j] != '-') {
-                    return false;
+            boolean check = true;
+            for (int k = 0; k <= L; k++) {
+                int sum = 0;
+                for (int j = k; j <= L; j++) {
+                    sum += tmp[j];
+                    if (sum == 0 && sign[k][j] != '0') {
+                        check = false;
+                    } else if (sum > 0 && sign[k][j] != '+') {
+                        check = false;
+                    } else if (sum < 0 && sign[k][j] != '-') {
+                        check = false;
+                    }
                 }
             }
+            if (check) {
+                DFS(L + 1);
+            }
         }
-        return true;
     }
 
 
