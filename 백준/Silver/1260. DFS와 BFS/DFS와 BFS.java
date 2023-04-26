@@ -2,10 +2,10 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N, M, V, p = 0;
-    static List<ArrayList<Integer>> graph;
+    static int N, M, V;
+    static List<ArrayList<Integer>> graph = new ArrayList<ArrayList<Integer>>();
     static boolean[] ch;
-    static int[] answerDFS, answerBFS;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +16,6 @@ public class Main {
         M = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
 
-        graph = new ArrayList<ArrayList<Integer>>();
         for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<Integer>());
         }
@@ -31,28 +30,15 @@ public class Main {
         }
 
         ch = new boolean[N + 1];
-        answerDFS = new int[N];
-        answerBFS = new int[N];
-
         ch[V] = true;
         DFS(V);
-        ch = new boolean[N + 1];
+
+        sb.append("\n");
+        Arrays.fill(ch, false);
         ch[V] = true;
         BFS(V);
 
-        for (int i : answerDFS) {
-            if (i == 0) {
-                break;
-            }
-            bw.write(i + " ");
-        }
-        bw.write("\n");
-        for (int i : answerBFS) {
-            if (i == 0) {
-                break;
-            }
-            bw.write(i + " ");
-        }
+        bw.write(sb.toString());
 
         bw.flush();
         bw.close();
@@ -60,13 +46,9 @@ public class Main {
     }
 
     public static void DFS(int V) {
-        if (p == N) {
-            return;
-        }
-
-        answerDFS[p++] = V;
-        for (int i = 1; i <= N; i++) {
-            if (graph.get(V).contains(i) && !ch[i]) {
+        sb.append(V + " ");
+        for (int i : graph.get(V)) {
+            if (!ch[i]) {
                 ch[i] = true;
                 DFS(i);
             }
@@ -78,13 +60,13 @@ public class Main {
         queue.offer(V);
         int L = 0;
 
-        answerBFS[L++] = V;
+        sb.append(V + " ");
         while (!queue.isEmpty()) {
             int tmp = queue.poll();
             for (int i : graph.get(tmp)) {
                 if (!ch[i]) {
                     ch[i] = true;
-                    answerBFS[L++] = i;
+                    sb.append(i + " ");
                     queue.offer(i);
                 }
             }
