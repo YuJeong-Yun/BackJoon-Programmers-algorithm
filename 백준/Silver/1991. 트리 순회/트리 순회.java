@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -8,7 +9,7 @@ class Tree {
         this.root = root;
     }
 
-    public Node findNode(Node node, char c) {
+    public Node findNode(Node node, char c) { // 해당 문자 가진 노드 찾는 함수
         if (root == null) {
             return null;
         }
@@ -17,43 +18,54 @@ class Tree {
         }
 
         Node find = null;
-        if (node.left != null) {
+        if (node.left != null) { // 왼쪽 자식 있으면 왼쪽 서브 트리 탐색해서 찾음
             find = findNode(node.left, c);
         }
-        if (find == null && node.right != null) {
+        if (find == null && node.right != null) { // 왼쪽 탐색 결과 null이고 오른쪽 자식 있으면 오른쪽 서브 트리 탐색
             find = findNode(node.right, c);
         }
         return find;
     }
 
-    public void preOrder(Node node) {
-        if (node == null) {
-            return;
+    public void add(char p, char l, char r) {
+        Node parent = findNode(root, p);
+        if (l != '.') {
+            parent.left = new Node(l);
+        }
+        if (r != '.') {
+            parent.right = new Node(r);
         }
 
-        System.out.print(node.word);
-        preOrder(node.left);
-        preOrder(node.right);
     }
 
-    public void inOrder(Node node) {
+    public void preOrder(Node node, StringBuilder sb) {
         if (node == null) {
             return;
         }
 
-        inOrder(node.left);
-        System.out.print(node.word);
-        inOrder(node.right);
+        sb.append(node.word);
+        preOrder(node.left, sb);
+        preOrder(node.right, sb);
     }
 
-    public void postOrder(Node node) {
+    public void inOrder(Node node, StringBuilder sb) {
         if (node == null) {
             return;
         }
 
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.print(node.word);
+        inOrder(node.left, sb);
+        sb.append(node.word);
+        inOrder(node.right, sb);
+    }
+
+    public void postOrder(Node node, StringBuilder sb) {
+        if (node == null) {
+            return;
+        }
+
+        postOrder(node.left, sb);
+        postOrder(node.right, sb);
+        sb.append(node.word);
     }
 }
 
@@ -67,9 +79,10 @@ class Node {
 }
 
 public class Main {
+    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
         Node root = new Node('A');
@@ -78,26 +91,19 @@ public class Main {
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             char c = st.nextToken().charAt(0);
-            Node left = new Node(st.nextToken().charAt(0));
-            Node right = new Node(st.nextToken().charAt(0));
+            char l = st.nextToken().charAt(0);
+            char r = st.nextToken().charAt(0);
 
-            Node findNode = tree.findNode(root, c);
-            if (left.word != '.') {
-                findNode.left = left;
-            }
-            if (right.word != '.') {
-                findNode.right = right;
-            }
+            tree.add(c, l, r);
         }
 
-        tree.preOrder(root);
-        System.out.println();
-        tree.inOrder(root);
-        System.out.println();
-        tree.postOrder(root);
+        tree.preOrder(root, sb);
+        sb.append("\n");
+        tree.inOrder(root, sb);
+        sb.append("\n");
+        tree.postOrder(root, sb);
 
-        bw.flush();
-        bw.close();
+        System.out.println(sb.toString());
         br.close();
     }
 
