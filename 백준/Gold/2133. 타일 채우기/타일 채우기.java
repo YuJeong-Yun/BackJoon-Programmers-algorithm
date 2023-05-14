@@ -1,36 +1,29 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.function.Function;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    Function<Integer, Boolean> isOdd = (n) -> (n&1)==1;
 
+    public void solution() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int N = Integer.parseInt(br.readLine());
-        int[] dy = new int[N + 1];
-        dy[0] = 1;
-        if (N > 1) {
-            dy[2] = 3;
+        int n = Integer.parseInt(br.readLine());
+        if (isOdd.apply(n)) {
+            System.out.println(0);
+            return;
         }
-        if (N > 3) {
-            dy[4] = 11;
+        int[] dp = new int[Math.max(n/2, 2)];
+        dp[0] = 3;
+        dp[1] = 11;
+        int tmp = 0;
+        for (int i = 2; i < n/2; i++) {
+            dp[i] = dp[i-1] * 3 + 2 + (tmp+=dp[i-2]*2);
         }
-        if (N > 5) {
-            dy[6] = 6 + 33 + 2;
-        }
-        for (int i = 8; i <= N; i += 2) {
-            dy[i] = dy[i - 2] * 3;
-            for (int j = 4; j <= i; j += 2) {
-                dy[i] += dy[i - j] * 2;
-            }
-        }
-
-        bw.write(dy[N] + "");
-        bw.flush();
-        bw.close();
-        br.close();
-
+        System.out.println(dp[n/2-1]);
     }
 
+    public static void main(String[] args) throws Exception {
+        new Main().solution();
+    }
 }
