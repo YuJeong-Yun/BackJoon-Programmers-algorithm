@@ -1,3 +1,4 @@
+
 import java.util.*;
 import java.io.*;
 
@@ -13,7 +14,7 @@ class Edge implements Comparable<Edge> {
     @Override
     public int compareTo(Edge e) {
         return this.cost - e.cost;
-    }
+    } // 가중치 순 오름차순
 }
 
 public class Main {
@@ -38,23 +39,22 @@ public class Main {
 
             list.add(new Edge(A, B, C));
         }
-        Collections.sort(list);
+        Collections.sort(list);// 가중치 순 오름차순
 
-        unf = new int[N + 1];
+        unf = new int[N + 1]; // 두 개 정점 연결되어 있는지 확인 위한 배열
         for (int i = 1; i <= N; i++) {
             unf[i] = i;
         }
-        List<Edge> edgeList = new ArrayList<>();
+        List<Edge> edgeList = new ArrayList<>(); // 선택된 간선 담을 리스트
         for (Edge e : list) {
-            if (find(e.v1) != find(e.v2)) {
+            if (find(e.v1) != find(e.v2)) { // 사이클 형성 안 할 경우만 리스트에 추가
                 union(e.v1, e.v2);
                 edgeList.add(e);
                 answer += e.cost;
             }
         }
 
-        Collections.sort(edgeList);
-        answer -= edgeList.get(edgeList.size() - 1).cost;
+        answer -= edgeList.get(edgeList.size() - 1).cost; // 두 집단 나누면 그 사이 간선은 필요없으므로 가장 큰 가중치 값 빼줌
 
         bw.write(answer + "");
         bw.flush();
@@ -73,7 +73,6 @@ public class Main {
         if (fa != fb) {
             unf[fa] = fb;
         }
-
     }
 
 }
