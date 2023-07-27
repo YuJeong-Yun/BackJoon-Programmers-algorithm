@@ -1,20 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-class Point implements Comparable<Point> {
-    int x, y, height;
-
-    public Point(int x, int y, int height) {
-        this.x = x;
-        this.y = y;
-        this.height = height;
-    }
-
-    public int compareTo(Point p) {
-        return p.height - this.height;
-    }
-}
-
 public class Main {
     static int[] dx = {-1, 0, 0, 1};
     static int[] dy = {0, -1, 1, 0};
@@ -38,8 +24,11 @@ public class Main {
         }
 
         cnt = new int[M][N]; // 이동 횟수 담을 배열
-        cnt[0][0] = 1;
-        BFS(new Point(0, 0, board[0][0]));
+        for (int i = 0; i < M; i++) {
+            Arrays.fill(cnt[i], -1); // 방문 체크 위해 -1로 초기화
+        }
+
+        DFS(M - 1, N - 1);
 
         bw.write(cnt[M - 1][N - 1] + "");
         bw.flush();
@@ -47,23 +36,21 @@ public class Main {
         br.close();
     }
 
-    public static void BFS(Point p) {
-        PriorityQueue<Point> pQ = new PriorityQueue<>();
-        pQ.offer(p);
+    public static int DFS(int x, int y) {
+        if (cnt[x][y] != -1) return cnt[x][y];
+        if (x == 0 && y == 0) return 1;
 
-        while (!pQ.isEmpty()) {
-            Point tmp = pQ.poll();
-            for (int i = 0; i < dx.length; i++) {
-                int nx = tmp.x + dx[i];
-                int ny = tmp.y + dy[i];
-                if (nx >= 0 && nx < M && ny >= 0 && ny < N && board[nx][ny] < tmp.height) {
-                    if (cnt[nx][ny] == 0) {
-                        pQ.offer(new Point(nx, ny, board[nx][ny]));
-                    }
-                    cnt[nx][ny] += cnt[tmp.x][tmp.y];
-                }
+        cnt[x][y] = 0; // 방문 체크
+        for (int i = 0; i < dx.length; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (nx >= 0 && nx < M && ny >= 0 && ny < N && board[nx][ny] > board[x][y]) {
+                cnt[x][y] += DFS(nx, ny);
             }
         }
+        return cnt[x][y];
+
     }
+
 
 }
