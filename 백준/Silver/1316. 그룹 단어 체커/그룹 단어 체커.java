@@ -17,13 +17,12 @@ public class Main {
 
 			int result = 1;
 			for (int j = 0; j < s.length(); j++) {
-				if (alphabets[s.charAt(j) - 'a'] == 1) {
-					if (s.charAt(j-1) != s.charAt(j)) {
-						result = 0;
-						break;
-					}
+				if (alphabets[s.charAt(j) - 'a'] == 0) {
+					alphabets[s.charAt(j) - 'a'] = 1;
+				} else if (s.charAt(j - 1) != s.charAt(j)) {
+					result = 0;
+					break;
 				}
-				alphabets[s.charAt(j) - 'a'] = 1;
 			}
 			if (result == 1) {
 				cnt++;
