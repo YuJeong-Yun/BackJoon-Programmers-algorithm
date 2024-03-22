@@ -1,5 +1,4 @@
 
-
 import java.io.*;
 import java.util.*;
 
@@ -14,10 +13,10 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); 
-        int M = Integer.parseInt(st.nextToken()); 
-        K = Integer.parseInt(st.nextToken()); 
-        int X = Integer.parseInt(st.nextToken()); 
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+        int X = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<>());
@@ -53,22 +52,14 @@ public class Main {
         int level = 1;
         while (!queue.isEmpty()) {
             int len = queue.size();
-            if (level == K) {
-                for (int i = 0; i < len; i++) {
-                    int tmp = queue.poll();
-                    for (int next : graph.get(tmp)) {
-                        if (!ch[next]) {
-                            ch[next] = true;
+            for (int i = 0; i < len; i++) {
+                int tmp = queue.poll();
+                for (int next : graph.get(tmp)) {
+                    if (!ch[next]) {
+                        ch[next] = true;
+                        if (level == K) {
                             answer.add(next);
-                        }
-                    }
-                }
-            } else {
-                for (int i = 0; i < len; i++) {
-                    int tmp = queue.poll();
-                    for (int next : graph.get(tmp)) {
-                        if (!ch[next]) {
-                            ch[next] = true;
+                        } else {
                             queue.offer(next);
                         }
                     }
