@@ -1,3 +1,4 @@
+
 import java.io.*;
 import java.util.*;
 
@@ -17,18 +18,10 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
         int answer = 0;
-        int maxY = Collections.max(yList);
-        int minY = Collections.min(yList);
-        int maxX = Collections.max(xList);
-        int minX = Collections.min(xList);
         for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-
-            if (x < minX || x > maxX || y < minY || y > maxY) {
-                continue;
-            }
 
             double totalArea = 0;
             totalArea += calcSize(x, xList.get(0), xList.get(1), y, yList.get(0), yList.get(1));
