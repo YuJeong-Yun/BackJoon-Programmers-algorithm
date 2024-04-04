@@ -8,7 +8,6 @@ class Point {
         this.x = x;
         this.y = y;
     }
-
 }
 
 public class Main {
@@ -18,7 +17,6 @@ public class Main {
     public static boolean[] key;
     public static char[][] board;
     public static List<Point> entranceList;
-    public static boolean check = true;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,6 +37,17 @@ public class Main {
                 for (int k = 0; k < w; k++) {
                     char c = s.charAt(k);
                     board[j][k] = c;
+
+                    if (j == 0 || j == h - 1 || k == 0 || k == w - 1) if (c != '*') {
+                        entranceList.add(new Point(j, k));
+                        if (c == '$') {
+                            answer++;
+                            board[j][k] = '.';
+                        } else if (Character.isLowerCase(c)) {
+                            key[c - 'a'] = true;
+                        }
+                    }
+
                 }
             }
             String s = br.readLine();
@@ -48,16 +57,6 @@ public class Main {
                 }
             }
 
-            for (int j = 0; j < h; j++) {
-                for (int k = 0; k < w; k++) {
-                    if (j == 0 || j == h - 1 || k == 0 || k == w - 1) {
-                        char c = board[j][k];
-                        if (c != '*') {
-                            entranceList.add(new Point(j, k));
-                        }
-                    }
-                }
-            }
             boolean restart = BFS();
             while (restart) {
                 restart = BFS();
@@ -75,18 +74,12 @@ public class Main {
 
         boolean[][] ch = new boolean[h][w];
         for (Point entrance : entranceList) {
-            if (Character.isUpperCase(board[entrance.x][entrance.y]) && !key[board[entrance.x][entrance.y] - 'A']) {
+            char c = board[entrance.x][entrance.y];
+            if (Character.isUpperCase(c) && !key[c - 'A']) {
                 continue;
             }
             queue.offer(entrance);
-
             ch[entrance.x][entrance.y] = true;
-            if (board[entrance.x][entrance.y] == '$') {
-                answer++;
-                board[entrance.x][entrance.y] = '.';
-            } else if (Character.isLowerCase(board[entrance.x][entrance.y])) {
-                key[board[entrance.x][entrance.y] - 'a'] = true;
-            }
         }
 
         while (!queue.isEmpty()) {
@@ -109,11 +102,9 @@ public class Main {
                     }
                     ch[nx][ny] = true;
                     queue.offer(new Point(nx, ny));
-
                 }
             }
         }
         return false;
     }
-
 }
